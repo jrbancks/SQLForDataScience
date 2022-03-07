@@ -1,0 +1,80 @@
+SELECT
+    tracks.trackid,
+    tracks.albumid,
+    tracks.name,
+    subalbum.title
+FROM tracks
+LEFT JOIN (SELECT
+    albums.albumid,
+    albums.title
+FROM albums WHERE albums.title = "Californication") as subalbum
+WHERE tracks.albumid = subalbum.albumid
+
+-- Answer: Procelain
+
+SELECT
+    customers.firstname,
+    customers.lastname,
+    customers.city,
+    customers.email
+FROM customers
+LEFT JOIN (SELECT
+    invoices.invoiceid,
+    invoices.customerid
+    FROM invoices) as i_custid 
+    WHERE customers.customerid = i_custid.customerid
+Group BY customers.customerid
+
+-- Answer: frantisekw@jetbrains.com
+
+SELECT
+    trk.name,
+    albums.title,
+    art.artistID,
+    trk.trackid
+FROM albums
+LEFT JOIN ( SELECT
+        tracks.albumid,
+        tracks.name,
+        tracks.trackid
+        FROM tracks
+) as trk
+LEFT JOIN (SELECT
+        artists.artistID from artists) as art
+
+WHERE albums.albumid = trk.albumid and albums.albumid=trk.albumid
+
+-- Answer: Breaking The Rules
+
+SELECT 
+    emp.lastname as ReportMgr,
+    e.lastname as EmployeeLastName
+FROM employees e, employees emp
+WHERE emp.reportsTo = e.employeeid;
+
+-- Answer: Callahan, King
+
+SELECT 
+    Name as Artist,
+    Artists.ArtistID,
+    Albums.Title as Album
+FROM Artists
+LEFT JOIN Albums
+ON Artists.ArtistID = Albums.ArtistID
+WHERE Album is NUll
+
+-- Answer: Gilberto
+
+SELECT e.firstname, e.lastname as LastName from employees e
+UNION
+SELECT c.firstname, c.lastname as LastName from customers c
+ORDER BY LastName DESC
+
+-- Answer: Taylor
+
+SELECT c.CustomerId, c.City , i.BillingCity as InvoiceCity from Customers c 
+INNER JOIN (SELECT CustomerId, BillingCity from Invoices) as i
+ON c.Customerid = i.CustomerId
+WHERE c.City != i.BillingCity
+
+-- No customer have a different city listed in their billing city versus customer city
