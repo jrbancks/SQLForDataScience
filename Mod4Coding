@@ -1,0 +1,56 @@
+SELECT c.Customerid as CustomerID, 
+    c.firstname || ' ' || c.lastname as CustomerFullName,
+    UPPER(c.City || ' ' || c.Country) as Address
+FROM Customers c;
+
+-- 1. MOUNTAIN VIEW USA
+
+SELECT 
+    FirstName,
+    LastName,
+    LOWER(SUBSTR(FirstName,1,4) || SUBSTR(LastName,1,2)) as UserID
+FROM Employees;
+
+-- 2. robeki
+
+
+SELECT 
+    FirstName,
+    LastName,
+    HireDate,
+    STRFTime('%Y','Now')-STRFTime('%Y',HireDate) as YearsOfService
+FROM Employees
+ORDER BY LastName ASC;
+
+-- 3. Peacock
+
+SELECT * from Customers c
+WHERE c.Company is Null;
+
+-- 4. Phone, Postal Code, Fax, Company
+
+SELECT 
+    City,
+    COUNT(City) as CustomerCount
+FROM Customers
+GROUP BY City
+ORDER BY CustomerCount DESC;
+
+-- 5. Mountain View, Sao Paulo, London
+
+SELECT 
+    c.FirstName,
+    c.LastName,
+    i.InvoiceId,
+    c.FirstName || c.LastName || i.InvoiceId as NewInvoiceId
+FROM Invoices i 
+LEFT JOIN (SELECT
+                FirstName,
+                LastName,
+		Customerid
+            FROM Customers) as c
+ON c.Customerid = i.CustomerId
+WHERE NewInvoiceId LIKE 'AstridGruber%'
+ORDER BY c.FirstName, c.LastName, i.InvoiceId;
+
+-- AstridGruber273, AstridGruber296, AstridGruber370
