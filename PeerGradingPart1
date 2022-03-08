@@ -1,6 +1,8 @@
 Peer Review Assignment
 Coursera Course: SQL for Data Science
 
+PART 1:
+
 *****1. Profile the data by finding the total number of records for each of the tables below:
 	
 i. Attribute table = 10000 (Unique/DISTINCT - 1115)
@@ -452,7 +454,7 @@ WHERE
 	
 	SELECT 
 		city, 
-		COUNT(review_count) as Total_Review_Count
+		SUM(review_count) as Total_Review_Count
 	FROM business
 	GROUP BY city
 	ORDER BY Total_Review_Count DESC;
@@ -462,31 +464,31 @@ WHERE
 	+-----------------+--------------------+
 	| city            | Total_Review_Count |
 	+-----------------+--------------------+
-	| Las Vegas       |               1561 |
-	| Phoenix         |               1001 |
-	| Toronto         |                985 |
-	| Scottsdale      |                497 |
-	| Charlotte       |                468 |
-	| Pittsburgh      |                353 |
-	| Montréal        |                337 |
-	| Mesa            |                304 |
-	| Henderson       |                274 |
-	| Tempe           |                261 |
-	| Edinburgh       |                239 |
-	| Chandler        |                232 |
-	| Cleveland       |                189 |
-	| Gilbert         |                188 |
-	| Glendale        |                188 |
-	| Madison         |                176 |
-	| Mississauga     |                150 |
-	| Stuttgart       |                141 |
-	| Peoria          |                105 |
-	| Markham         |                 80 |
-	| Champaign       |                 71 |
-	| North Las Vegas |                 70 |
-	| North York      |                 64 |
-	| Surprise        |                 60 |
-	| Richmond Hill   |                 54 |
+	| Las Vegas       |              82854 |
+	| Phoenix         |              34503 |
+	| Toronto         |              24113 |
+	| Scottsdale      |              20614 |
+	| Charlotte       |              12523 |
+	| Henderson       |              10871 |
+	| Tempe           |              10504 |
+	| Pittsburgh      |               9798 |
+	| Montréal        |               9448 |
+	| Chandler        |               8112 |
+	| Mesa            |               6875 |
+	| Gilbert         |               6380 |
+	| Cleveland       |               5593 |
+	| Madison         |               5265 |
+	| Glendale        |               4406 |
+	| Mississauga     |               3814 |
+	| Edinburgh       |               2792 |
+	| Peoria          |               2624 |
+	| North Las Vegas |               2438 |
+	| Markham         |               2352 |
+	| Champaign       |               2029 |
+	| Stuttgart       |               1849 |
+	| Surprise        |               1520 |
+	| Lakewood        |               1465 |
+	| Goodyear        |               1155 |
 	+-----------------+--------------------+
 	(Output limit exceeded, 25 of 362 total rows shown)
 	
@@ -668,4 +670,3 @@ WHERE
 		| Lissa     |  120 |
 		+-----------+------+
 		
-	
