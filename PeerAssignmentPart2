@@ -1,0 +1,78 @@
+*****2. Group business based on the ones that are open and the ones that are closed. What differences can you find between the ones that are still open and the ones that are closed? List at least two differences and the SQL code you used to arrive at your answer.
+		
+i. Difference 1:
+         Open businesses have more count of stars (~85%) of the total. 
+         
+ii. Difference 2:
+         Also, open businesses have higher average review_count and star rating.
+         
+         
+SQL code used for analysis:
+
+SELECT 
+    count(stars) as Total_Count, 
+    avg(stars) as Avg_StarRating, 
+    avg(review_count) as Avg_ReviewCount, 
+    is_open
+FROM business
+GROUP BY is_open
+ORDER BY Total_Count DESC;
+	
+	
+*****3. For this last part of your analysis, you are going to choose the type of analysis you want to conduct on the Yelp dataset and are going to prepare the data for analysis.
+
+Ideas for analysis include: Parsing out keywords and business attributes for sentiment analysis, clustering businesses to find commonalities or anomalies between them, predicting the overall star rating for a business, predicting the number of fans a user will have, and so on. These are just a few examples to get you started, so feel free to be creative and come up with your own problem you want to solve. Provide answers, in-line, to all of the following:
+	
+i. Indicate the type of analysis you chose to do:
+         1. Correlation of Star Rating, Review Count and CheckIn Count.
+         
+ii. Write 1-2 brief paragraphs on the type of data you will need for your analysis and why you chose that data:
+          It has been observed that on a per business that is open there's a strong correlation between Average Review Count and Average CheckIn Count. (Correlation Coefficient of 0.68) -- used Excel to get the CORREL.
+		 On the other hand, there's a weak positive correlation between Average Review Count and Avg Star Rating  (Correl Coeff: 0.21) and Average Check In Count and Avg Star Rating (Correl Coeff: 0.02)
+                  
+iii. Output of your finished dataset:
+         +----------------------------------------------------+-------+----------------+-----------------+---------+---------------+
+		| name                                               | state | Avg_StarRating | Avg_ReviewCount | is_open | CheckIn_Count |
+		+----------------------------------------------------+-------+----------------+-----------------+---------+---------------+
+		| Cracker Barrel Old Country Store                   | OH    |            3.5 |            27.0 |       1 | 2.43939393939 |
+		| John Christ Winery                                 | OH    |            3.0 |            27.0 |       1 |           2.0 |
+		| LongHorn Steakhouse                                | OH    |            3.5 |            21.0 |       1 |  2.2619047619 |
+		| Spudnut Shop Donuts                                | OH    |            4.5 |            21.0 |       1 |           1.3 |
+		| Davitino's Restaurant                              | OH    |            3.0 |            19.0 |       1 |        1.3125 |
+		| Galleria Gowns                                     | OH    |            4.5 |            16.0 |       1 |          1.25 |
+		| Panda Chinese Restaurant                           | OH    |            3.5 |            16.0 |       1 | 1.63157894737 |
+		| Red Wagon Farm                                     | OH    |            3.5 |            13.0 |       1 | 1.27272727273 |
+		| Days Inn Willoughby/Cleveland                      | OH    |            1.0 |            12.0 |       1 |           1.0 |
+		| Courtyard Cleveland Willoughby                     | OH    |            3.0 |            11.0 |       1 | 1.58333333333 |
+		| Pizza Cutter                                       | OH    |            4.0 |            11.0 |       1 | 1.55555555556 |
+		| Wah Sun                                            | OH    |            3.5 |             9.0 |       1 | 1.33333333333 |
+		| Atlas Cinemas                                      | OH    |            3.0 |             8.0 |       1 | 1.26086956522 |
+		| Berkshire Hills Golf Course                        | OH    |            3.0 |             7.0 |       1 |          1.25 |
+		| CVS Pharmacy                                       | OH    |            3.0 |             6.0 |       1 | 1.31578947368 |
+		| Rite Aid                                           | OH    |            2.0 |             6.0 |       1 | 1.35294117647 |
+		| Chapman's Food Mart                                | OH    |            4.0 |             5.0 |       1 | 1.26315789474 |
+		| Manakiki Golf Course-Cleveland Metroparks          | OH    |            3.5 |             5.0 |       1 |           1.0 |
+		| Brownie's Market                                   | OH    |            4.0 |             4.0 |       1 |         1.125 |
+		| Burger King                                        | OH    |            1.0 |             4.0 |       1 |           1.5 |
+		| Chagrin Valley Little Theatre                      | OH    |            4.5 |             4.0 |       1 | 1.86206896552 |
+		| Dons C A R S                                       | OH    |            4.0 |             4.0 |       1 |           1.0 |
+		| Subway                                             | OH    |            3.0 |             4.0 |       1 |           1.0 |
+		| Case Western Reserve University Faclty Dntl Prctce | OH    |            1.5 |             3.0 |       1 |           1.0 |
+		| Dairy Queen                                        | OH    |            4.5 |             3.0 |       1 |           1.0 |
+		+----------------------------------------------------+-------+----------------+-----------------+---------+---------------+
+		(Output limit exceeded, 25 of 28 total rows shown)
+         
+iv. Provide the SQL code you used to create your final dataset:
+
+ 			SELECT
+                b.name as name,
+                b.state,
+                avg(b.stars) as Avg_StarRating,
+                avg(b.review_count) as Avg_ReviewCount,
+                b.is_open,
+                avg(ch.count) as CheckIn_Count
+            FROM business b
+            LEFT JOIN (checkin) as ch
+            WHERE b.id = ch.business_id AND b.is_open = 1
+            GROUP by b.name
+            ORDER BY Avg_ReviewCount DESC;
